@@ -63,6 +63,7 @@ message.innerHTML = 'we use cookid for improved functionality and analytics.<but
 // header.prepend(message);
 header.append(message);
 // header.append(message.cloneNode(true)) //for adding multiple times
+// header.append(message.cloneNode(true)) //for adding multiple times
 
 // header.before(message);
 // header.after(message)
