@@ -33,3 +33,41 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+//getting elements
+
+console.log(document.documentElement)
+console.log(document.body);
+console.log(document.head);
+
+const header = document.querySelector('.header');
+console.log(header)
+
+const allSections = document.querySelectorAll('.section')
+console.log(allSections);
+
+const section1 = document.getElementById('section--1')
+console.log(section1);
+
+const allButtons = document.getElementsByTagName('button');
+console.log(allButtons)
+
+//creating element
+
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+message.textContent ='we are just';
+message.innerHTML = 'we use cookid for improved functionality and analytics.<button class="btn btn--close-cookie">Got it!</button>';
+
+
+// header.prepend(message);
+header.append(message);
+// header.append(message.cloneNode(true)) //for adding multiple times
+
+// header.before(message);
+// header.after(message)
+
+//deleting
+document.querySelector('.btn--close-cookie').addEventListener('click',function(){
+  message.remove();
+})
