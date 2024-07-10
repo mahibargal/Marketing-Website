@@ -115,3 +115,63 @@ logo.classList.remove('class2');
 console.log(logo.classList.toggle('class2'));
 console.log(logo.classList.contains('class1'))
 
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+// const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click',function(e){
+const s1Coords = section1.getBoundingClientRect();
+console.log(s1Coords);
+console.log(e.target.getBoundingClientRect());
+console.log('Current scroll (X/Y)',window.pageXOffset,window.pageYOffset);
+console.log('Height/Width viewport',document.documentElement.clientHeight,document.documentElement.clientWidth);
+
+//old way
+//scrolling
+// window.scrollTo(s1Coords.left+window.pageXOffset,s1Coords.top + window.pageYOffset)
+
+//smooth scroll
+// window.scrollTo({
+//   left:s1Coords.left+window.pageXOffset,
+//   top:s1Coords.top + window.pageYOffset,
+//   behavior:'smooth'
+// })
+
+//new way
+section1.scrollIntoView({behavior:'smooth'})
+})
+
+const h1 = document.querySelector('h1');
+const h1Alert = function (e){
+  alert('AddEventLiatner: Congrats you are reading heading');
+}
+
+h1.addEventListener('mouseenter',h1Alert);
+
+setTimeout(() => {
+  h1.removeEventListener('mouseenter',h1Alert)
+}, 100);
+
+const randomInt = (min,max)=> Math.floor(Math.random() * (max - min + 1) + min);
+
+const randomColor = ()=> `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`;
+
+document.querySelector('.nav__link').addEventListener('click',function(e){
+  this.style.backgroundColor = randomColor();
+  console.log('LINk',e.target,e.currentTarget)
+  // console.log(randomColor())
+  console.log(this == e.currentTarget)
+  // e.stopPropagation();
+})
+
+document.querySelector('.nav__links').addEventListener('click',function(e){
+  this.style.backgroundColor = randomColor();
+  console.log('Nav links container',e.target,e.currentTarget)
+  // console.log(randomColor())
+})
+
+document.querySelector('.nav').addEventListener('click',function(e){
+  this.style.backgroundColor = randomColor();
+  console.log('NAV',e.target,e.currentTarget)
+  // console.log(randomColor())
+})
+
