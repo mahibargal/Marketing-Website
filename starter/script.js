@@ -140,38 +140,66 @@ console.log('Height/Width viewport',document.documentElement.clientHeight,docume
 section1.scrollIntoView({behavior:'smooth'})
 })
 
-const h1 = document.querySelector('h1');
-const h1Alert = function (e){
-  alert('AddEventLiatner: Congrats you are reading heading');
-}
+//page nvigation
 
-h1.addEventListener('mouseenter',h1Alert);
+// document.querySelectorAll('.nav__link').forEach(function (elm) {
+//   elm.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     console.log(id)
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 
-setTimeout(() => {
-  h1.removeEventListener('mouseenter',h1Alert)
-}, 100);
+//   })
+// })
 
-const randomInt = (min,max)=> Math.floor(Math.random() * (max - min + 1) + min);
-
-const randomColor = ()=> `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`;
-
-document.querySelector('.nav__link').addEventListener('click',function(e){
-  this.style.backgroundColor = randomColor();
-  console.log('LINk',e.target,e.currentTarget)
-  // console.log(randomColor())
-  console.log(this == e.currentTarget)
-  // e.stopPropagation();
-})
+//above is not a proper solution as foreach loop 1000 elments , so to avoid this we use event delegation
 
 document.querySelector('.nav__links').addEventListener('click',function(e){
-  this.style.backgroundColor = randomColor();
-  console.log('Nav links container',e.target,e.currentTarget)
-  // console.log(randomColor())
+  console.log(this);
+  e.preventDefault();
+  if(e.target.classList.contains('nav__link')){
+const id = e.target.getAttribute('href');
+document.querySelector(id).scrollIntoView({behavior:'smooth'})
+
+  }
 })
 
-document.querySelector('.nav').addEventListener('click',function(e){
-  this.style.backgroundColor = randomColor();
-  console.log('NAV',e.target,e.currentTarget)
-  // console.log(randomColor())
-})
+
+
+
+
+// const h1 = document.querySelector('h1');
+// const h1Alert = function (e){
+//   alert('AddEventLiatner: Congrats you are reading heading');
+// }
+
+// h1.addEventListener('mouseenter',h1Alert);
+
+// setTimeout(() => {
+//   h1.removeEventListener('mouseenter',h1Alert)
+// }, 100);
+
+// const randomInt = (min,max)=> Math.floor(Math.random() * (max - min + 1) + min);
+
+// const randomColor = ()=> `rgb(${randomInt(0,255)},${randomInt(0,255)},${randomInt(0,255)})`;
+
+// document.querySelector('.nav__link').addEventListener('click',function(e){
+//   this.style.backgroundColor = randomColor();
+//   console.log('LINk',e.target,e.currentTarget)
+//   // console.log(randomColor())
+//   console.log(this == e.currentTarget)
+//   // e.stopPropagation();
+// })
+
+// document.querySelector('.nav__links').addEventListener('click',function(e){
+//   this.style.backgroundColor = randomColor();
+//   console.log('Nav links container',e.target,e.currentTarget)
+//   // console.log(randomColor())
+// })
+
+// document.querySelector('.nav').addEventListener('click',function(e){
+//   this.style.backgroundColor = randomColor();
+//   console.log('NAV',e.target,e.currentTarget)
+//   // console.log(randomColor())
+// })
 
