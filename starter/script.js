@@ -154,17 +154,38 @@ section1.scrollIntoView({behavior:'smooth'})
 
 //above is not a proper solution as foreach loop 1000 elments , so to avoid this we use event delegation
 
-document.querySelector('.nav__links').addEventListener('click',function(e){
+document.querySelector('.nav__links').addEventListener('click', function (e) {
   console.log(this);
   e.preventDefault();
-  if(e.target.classList.contains('nav__link')){
-const id = e.target.getAttribute('href');
-document.querySelector(id).scrollIntoView({behavior:'smooth'})
+  if (e.target.classList.contains('nav__link')) {
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' })
 
   }
 })
 
+const operationTabContainer = document.querySelector('.operations__tab-container');
+const operationsTab = document.querySelectorAll('.operations__tab');
+const operationsContent = document.querySelectorAll('.operations__content');
 
+//event eligation
+operationTabContainer.addEventListener('click',function(e){
+  const clicked = e.target.closest('.operations__tab');
+  console.log(clicked);
+
+  if(clicked){
+    //remove active classes
+    operationsTab.forEach(t=>t.classList.remove('operations__tab--active'));
+    operationsContent.forEach(c=>c.classList.remove('operations__content--active'))
+
+    //activate current tab active
+    clicked.classList.add('operations__tab--active');
+    //activate current click data tab content
+    document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+
+  }
+
+})
 
 
 
