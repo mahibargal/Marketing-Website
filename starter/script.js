@@ -187,7 +187,34 @@ operationTabContainer.addEventListener('click',function(e){
 
 })
 
+//passing arg to event handler function
 
+const nav = document.querySelector('.nav');
+const onHoverOut = function (e) {
+  console.log(e);
+  console.log(this);
+  const opacity = this
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach((elm) => {
+      if (elm != link) elm.style.opacity = opacity
+    }
+    )
+  }
+}
+//shortcut way with bind method
+nav.addEventListener('mouseover', onHoverOut.bind(0.5))
+
+//  onHoverOut(e,0.5)
+// })
+nav.addEventListener('mouseout', onHoverOut.bind(1))
+// {
+//   console.log('leave');
+//   onHoverOut(e,1)
+// })
 
 // const h1 = document.querySelector('h1');
 // const h1Alert = function (e){
