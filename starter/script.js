@@ -61,7 +61,7 @@ message.innerHTML = 'we use cookid for improved functionality and analytics.<but
 
 
 // header.prepend(message);
-header.append(message);
+// header.append(message);
 // header.append(message.cloneNode(true)) //for adding multiple times
 // header.append(message.cloneNode(true)) //for adding multiple times
 
@@ -69,9 +69,9 @@ header.append(message);
 // header.after(message)
 
 //deleting
-document.querySelector('.btn--close-cookie').addEventListener('click',function(){
-  message.remove();
-})
+// document.querySelector('.btn--close-cookie').addEventListener('click',function(){
+//   message.remove();
+// })
 
 //styles
 message.style.backgroundColor = '#37383d';
@@ -203,6 +203,7 @@ const onHoverOut = function (e) {
       if (elm != link) elm.style.opacity = opacity
     }
     )
+    logo.style.opacity=opacity;
   }
 }
 //shortcut way with bind method
@@ -211,6 +212,54 @@ nav.addEventListener('mouseover', onHoverOut.bind(0.5))
 //  onHoverOut(e,0.5)
 // })
 nav.addEventListener('mouseout', onHoverOut.bind(1))
+
+
+//sticky navigation
+// const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords)
+// window.addEventListener('scroll',function(e){
+
+//   if(window.scrollY > initialCoords.top) nav.classList.add('sticky')
+//   else nav.classList.remove('sticky')
+// })
+
+//observer api
+// const obsCallBack = function(entries, observer){
+
+//   entries.forEach(entry =>{
+//     console.log(entry);
+//   })
+// }
+// const obsOptions = {
+//   root:null,
+//   threshold:0.1
+// }
+// const observer = new IntersectionObserver(obsCallBack,obsOptions)
+// observer.observe(section1);
+
+//added sticky navigation with observer;
+const navHeight = nav.getBoundingClientRect().height
+
+const callBack = function(entries){
+  const [entry] = entries;
+  if(!entry.isIntersecting) {
+    nav.classList.add('sticky')
+  } else{
+    nav.classList.remove('sticky')
+  }
+}
+
+const observer = new IntersectionObserver(callBack,{
+  root:null,
+  threshold:0,
+  rootMargin:`-${navHeight}px`
+});
+
+observer.observe(header);
+
+
+
+
 // {
 //   console.log('leave');
 //   onHoverOut(e,1)
