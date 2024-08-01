@@ -280,8 +280,81 @@ const sectionObserver = new IntersectionObserver(revealSection,{
 
 allSectionss.forEach(function(section){
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 })
+
+//lazy loading images
+
+const targetImges = document.querySelectorAll('img[data-src]');
+console.log(targetImges)
+
+const lazyImagesLoad = function(entries,observer){
+  const [entry] = entries;
+console.log(entry);
+if(!entry.isIntersecting) return;
+
+entry.target.src = entry.target.dataset.src;
+
+entry.target.addEventListener('load',function(){
+  entry.target.classList.remove('lazy-img')
+
+})
+}
+const lazyImgObserver = new IntersectionObserver(lazyImagesLoad,{root:null,threshold:0,rootMargin:'200px'})
+
+targetImges.forEach(img => lazyImgObserver.observe(img));
+
+
+//slider 
+
+const slides = document.querySelectorAll('.slide');
+const slider = document.querySelector('.slider');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+const maxSlide = slides.length;
+let currentSlide = 0;
+// slider.style.transform ='scale(0.2) translateX(-1000px)';
+// slider.style.overflow ='visible';
+
+
+// slides.forEach((s,i)=>{
+//   s.style.transform = `translateX(${100 * i}% )`;
+// })
+
+const gotoSlide = function(slide){
+  slides.forEach((s,i)=>{
+    s.style.transform = `translateX(${100 * (i-slide)}% )`;
+  })
+}
+
+gotoSlide(0);
+
+btnLeft.addEventListener('click',function(){
+
+  if(currentSlide == 0){
+    currentSlide=maxSlide-1
+  }else{
+    currentSlide--
+  }
+  gotoSlide(currentSlide);
+  // slides.forEach((s,i)=>{
+  //   s.style.transform = `translateX(${100 * (i-currentSlide)}% )`;
+  // })
+})
+btnRight.addEventListener('click',function(){
+  if(currentSlide == maxSlide-1){
+    currentSlide=0
+  }else{
+    currentSlide++
+  } 
+  
+  gotoSlide(currentSlide);
+  // slides.forEach((s,i)=>{
+  //   s.style.transform = `translateX(${100 * (i-currentSlide)}% )`;
+  // })
+})
+
+
 // {
 //   console.log('leave');
 //   onHoverOut(e,1)
