@@ -320,28 +320,19 @@ let currentSlide = 0;
 // slides.forEach((s,i)=>{
 //   s.style.transform = `translateX(${100 * i}% )`;
 // })
+const dotContainer = document.querySelector('.dots');
+creatDots();
 
 const gotoSlide = function(slide){
   slides.forEach((s,i)=>{
     s.style.transform = `translateX(${100 * (i-slide)}% )`;
   })
 }
-
 gotoSlide(0);
+activateDot(0)
 
-btnLeft.addEventListener('click',function(){
 
-  if(currentSlide == 0){
-    currentSlide=maxSlide-1
-  }else{
-    currentSlide--
-  }
-  gotoSlide(currentSlide);
-  // slides.forEach((s,i)=>{
-  //   s.style.transform = `translateX(${100 * (i-currentSlide)}% )`;
-  // })
-})
-btnRight.addEventListener('click',function(){
+const nextSLide = function(){
   if(currentSlide == maxSlide-1){
     currentSlide=0
   }else{
@@ -349,12 +340,67 @@ btnRight.addEventListener('click',function(){
   } 
   
   gotoSlide(currentSlide);
+  activateDot(currentSlide);
+}
+
+const prevSLide = function(){
+  if(currentSlide == 0){
+    currentSlide=maxSlide-1
+  }else{
+    currentSlide--
+  }
+  gotoSlide(currentSlide);
+  activateDot(currentSlide);
+
+}
+btnLeft.addEventListener('click',prevSLide
+
+ 
   // slides.forEach((s,i)=>{
   //   s.style.transform = `translateX(${100 * (i-currentSlide)}% )`;
   // })
+)
+btnRight.addEventListener('click',nextSLide
+  // slides.forEach((s,i)=>{
+  //   s.style.transform = `translateX(${100 * (i-currentSlide)}% )`;
+  // })
+)
+
+
+//arrowkeys work
+
+document.addEventListener('keydown',function(e){
+  if(e.key === 'ArrowLeft') prevSLide();
+  e.key === 'ArrowRight' && nextSLide();
 })
 
+//
+// dots added
 
+
+function creatDots(){
+  slides.forEach(function(s,i){
+    const element = `<button class="dots__dot" data-slide="${i}"></button>`
+    dotContainer.insertAdjacentHTML('beforeend',element)
+  })
+}
+
+dotContainer.addEventListener('click',function(e){
+  if(e.target.classList.contains('dots__dot')){
+    const slide = e.target.dataset.slide;
+    gotoSlide(slide);
+    activateDot(slide);
+  }
+})
+
+function activateDot(slide){
+  document.querySelectorAll('.dots__dot').forEach((dot)=>{
+    dot.classList.remove('dots__dot--active');
+
+  })
+  document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add('dots__dot--active');
+  currentSlide = slide
+}
 // {
 //   console.log('leave');
 //   onHoverOut(e,1)
@@ -395,3 +441,16 @@ btnRight.addEventListener('click',function(){
 //   // console.log(randomColor())
 // })
 
+
+// document.addEventListener('DOMContentLoaded',function(e){
+//   console.log('Html is parsed and DOM built',e)
+// })
+
+// window.addEventListener('load',function(e){
+//   console.log('Fully loaded',e)
+// })
+
+// window.addEventListener('beforeunload',function(e){
+//   console.log(e);
+//   e.returnValue = 'Message';
+// })
